@@ -1,0 +1,249 @@
+%-------------------------------------------------------------------------------
+\def \styfile{_sty/shx}
+\def \fileInfo{(This sty file adds extended set of facilities/ commands/ shorthand-formats.)}
+\def \fileversion{v0623}
+\def \filedate{2023/06/23}
+%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{\styfile}[\filedate\space\fileversion] 
+\typeout{-- Package: "\styfile",\space\fileInfo\space\fileversion\space <\filedate> --}
+%-------------------------------------------------------------------------------
+
+%===============================================================================
+%%%       Boxing & Framing    --   Using: tcolorbox environment              %%%
+%===============================================================================
+% Usage:   To put operand-text into
+% ------
+% 1) \begin{gbox} \centering ...\end{gbox}   -> In "\textwidth gray-box, non-framed" (Non-bordered)
+%
+% 2) \begin{gboxf}\centering ...\end{gboxf}  -> In "\textwidth gray-box, framed"
+%
+% 3) \colorbox{mygray}{...}
+%
+% 4) \gboxinline{...}           -> \textbf{text} in "inline \textwidth gray-box, non-framed"
+%
+%
+% 5) \begin{SBN}...\end{SBN}    -> in "\textwidth gray-box, non-framed"
+% 6) \begin{MBOX}...\end{MBOX}  -> in "\textwidth gray-box, between two parallel lines"
+%-------------------------------------------------------------------------------
+
+%% 1)
+\newtcolorbox{gbox}{colback=mygray, 
+                    colframe=mygray, boxrule=-0pt, arc=1mm, frame hidden,  enhanced,  %% boxrule=-0pt, frame hidden --> No-boxed 
+                    width=\textwidth,                                                 %% Default: \textwidth
+                    grow to right by=-1cm, grow to left by=-1cm, 
+                    left=6pt, right=6pt, top=4pt, bottom=4pt,                         %% Margins inside the box
+                    box align=center, valign=center, %%halign=center,                 %% Alignments inside the box
+                    boxsep=0pt, breakable, center,
+                    }
+
+%% 2)
+\newtcolorbox{gboxf}{colback=mygray, 
+                     colframe=black, boxrule=0.5pt, arc=1mm, %frame hidden, enhanced %% boxrule=-0pt, frame hidden --> No-boxed 
+                     width=\textwidth,                                               %% Default: \textwidth
+                     grow to right by=-1cm, grow to left by=-1cm, 
+                     left=6pt, right=6pt, top=4pt, bottom=4pt,                       %% Margins inside the box
+                     box align=center, valign=center, %%halign=center,               %% Alignments inside the box
+                     boxsep=0pt, breakable, center,
+                     }
+
+%% 4)
+\newcommand{\gboxinline}[1]{\colorbox{mygray}{\color{black}\bfseries#1}}
+
+
+%% 5)
+\newtcolorbox{SBN}{colback=gray!25,  %mygray
+                   colframe=gray!25, boxrule=-0pt, arc=1mm, frame hidden, enhanced, %% boxrule=-0pt, frame hidden --> No-boxed     
+                   width=0.75\textwidth,                                            %% Default: \textwidth
+                   grow to right by=0mm, grow to left by=0mm, 
+                   left=6pt, right=6pt, top=4pt, bottom=4pt,                        %% Margins inside the box
+                   box align=center, valign=center, %halign=center,                 %% Alignments inside the box
+                   boxsep=0pt, 
+                   breakable, center
+                  }
+
+%% 6) :
+\newtcolorbox{MBOX}{colback=mygray,
+	              colframe=black, arc=0pt, outer arc=0pt, frame hidden,%enhanced,-->Do not add enhance to MBOX
+                    width=(\textwidth-6\parindent), grow to right by=0mm, grow to left by=0mm,  %% Default: \textwidth
+                    left=6pt, right=6pt, top=6pt, bottom=6pt,                                   %% Margins inside the box
+                    boxrule=-0pt, box align=center, valign=center, halign=center,               %% Alignments inside the box
+                    boxsep=-3pt,                    
+                    breakable, center, 
+                    leftrule=-1px, bottomrule=0.5pt, rightrule=-1px,, toprule=0.5pt,            %% Top & Bottom Lines
+                    % nobeforeafter, 
+                    % beforeafter skip=12pt,
+                    }
+
+
+
+\usepackage{stackengine}
+%%/////////////////////////////////////////////////////////////////////////////
+%% \usepackage{stackengine} provides
+%% Usage: \commands{overlay image}{base image}{V-offset}{H-offset}
+%% E.g.:  \bottominset{*}{O}{}{}
+%%        \topinset{*}{O}{1pt}{}
+%%/////////////////////////////////////////////////////////////////////////////
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%      Time-Management     %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%ToDO:
+\def\todo{\scalebox{1.5}{$\square$}}
+\def\done{\bottominset{\scalebox{1.5}{\ding{51}}}{\todo}{}{1pt}}
+
+\def\task{\scalebox{1.5}{\color{mygray}$\blacksquare$}}
+\def\well{\bottominset{\scalebox{1.5}{\ding{51}}}{\task}{}{1pt}}
+
+\newcommand{\due}[1]{\hspace*{12pt}\emph{\textcolor{blue}{(#1)}}}
+
+\def\cmark{\textcolor{myblue}{\scalebox{1.5}{\ding{51}}}}  % V
+\def\xmark{\textcolor{myblue}{\scalebox{1.5}{\ding{55}}}}  % X
+
+\newcommand{\uppercmark}[1]{\stackon[-.4ex]{#1}{\cmark}}   
+\newcommand{\upperxmark}[1]{\stackon[-.4ex]{#1}{\xmark}}
+
+%%Address:
+\def\mail {\raisebox{-3pt}{\scalebox{1.9}{\ding{41}}}} 
+\def\call {\raisebox{-1pt}{\scalebox{1.5}{\ding{38}}}} 
+\def\tel  {\raisebox{-3pt}{\scalebox{1.9}{\ding{37}}}}
+\def\phone{\raisebox{-1pt}{\scalebox{1.25}{\faPhone}}}
+
+\newcommand{\SYM}[1]{\csname#1\endcsname}
+%%Fun
+\def\coffee{\raisebox{-1pt}{\scalebox{1.5}{\SYM{Coffeecup}}}}  %\SYM{Cofeecup} -> \Coffeecup
+\def\rest  {\raisebox{-1pt}{\scalebox{1.2}{\SYM{faCoffee}}}}   %\SYM{faCoffee} -> \faCoffee
+\def\book  {\raisebox{-1pt}{{\color{gray}\scalebox{1}{\SYM{faBook}}}}}
+\def\read  {\book}
+\def\bed   {\raisebox{-1pt}{\scalebox{1.2}{\SYM{faBed}}}}      %\SYM{faBed} -> \faBed
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%          Special Symbols          %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \ONE  \TWO  \THREE   \FOUR   ...   \NINE 
+%%   1     2      3       4     ...     9   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\PRN}[1]{\raisebox{-1pt}{\scalebox{1.5}{#1}}}
+%\newcommand{\shoo}[1]{#1};  %{}
+\def\ONEF  {\PRN{\ding{182}}}  
+\def\TWOF  {\PRN{\ding{183}}}
+\def\THREEF{\PRN{\ding{184}}}
+\def\FOURF {\PRN{\ding{185}}}
+\def\FIVEF {\PRN{\ding{186}}}
+\def\SIXF  {\PRN{\ding{187}}}
+\def\SEVENF{\PRN{\ding{188}}}
+\def\EIGHTF{\PRN{\ding{189}}}
+\def\NINEF {\PRN{\ding{190}}}
+\def\TENF  {\PRN{\ding{191}}}
+
+\def\ONE   {\PRN{\ding{192}}}
+\def\TWO   {\PRN{\ding{193}}}
+\def\THREE {\PRN{\ding{194}}}
+\def\FOUR  {\PRN{\ding{195}}}
+\def\FIVE  {\PRN{\ding{196}}}
+\def\SIX   {\PRN{\ding{197}}}
+\def\SEVEN {\PRN{\ding{198}}}
+\def\EIGHT {\PRN{\ding{199}}}
+\def\NINE  {\PRN{\ding{200}}}
+\def\TEN   {\PRN{\ding{201}}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%      Question-&-Answers      %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{Qcnt}   %Used for Questions in Labs, etc.
+\setcounter{Qcnt}{0}
+\newcommand\QUES[1]{%
+                    \stepcounter{Qnr}
+                    \setcounter{equation}{0}
+                    \nl#1~\arabic{Qnr}:
+                    }%\vspace{-10pt}}
+\def\FQED{\hspace*{\fill}~\ding{110} \par}
+\def\BQED{\hspace*{\fill}~\ding{111} \par}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%      Horizontal Lines      %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand{\HLg}[1]{\textcolor[rgb]{0.4,0.4,0.4}{\ara{\rule{#1\textwidth}{0.5pt}}}}
+\def\seclineShort{\begin{center}{\color{gray}\rule{.2\textwidth}{1pt}\raisebox{-5pt}{~*~*~*~}\rule{.2\textwidth}{1pt}}\end{center}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%     I am working noe       %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\inhand{
+\begin{center}
+	{\color{blue}[TODO] bnouri: \includegraphics[keepaspectratio=true, width=0.05\textwidth, angle=2]{_sty/wrk.png}}
+\end{center}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%        New Counters        %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{Fcnt} %FigNr
+\setcounter{Fcnt}{1} 
+\newcommand{\FigNr}{\arabic{Fcnt}\@} 
+\newcommand{\FigNrAdd}{\stepcounter{FigNr}}
+\newcommand{\FigNrAuto}{\arabic{Fcnt}\@\stepcounter{FigNr}}
+
+%-------------------------------------
+%>>>   Make a \part{} page        <<<%
+%------------------------------------
+\newcommand{\mypart}[1]{
+\np
+\vspace*{8\baselineskip}
+\begin{center}
+\begin{minipage}{0.8\linewidth}
+\part{#1}
+\end{minipage}
+\end{center}
+\np
+}
+
+
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%      Man-Made Proof Environment     %%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% The "amsthm" and "IEEEtrantools" packages provide their own proof environments and related blows and vessels; 
+% %% the fallowing is a "man" made one
+
+% \def\PROOF{{\raggedright{\textbf{\textit{Proof:~~}}}}}
+% \def\FQED{\hspace*{\fill}~\ding{110} \par}
+% \def\BQED{\hspace*{\fill}~\ding{111} \par}
+
+% \def\SOL{{\raggedright{\textbf{\textit{Solution:~}}}}}  
+% \def\ANS{{\raggedright{\textbf{\textit{Answer:~}}}}} 
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%   Complementary Stuff      %%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newcommand{\DOT}{\raisebox{-1pt}{\Large \textbullet}~}
+% \newcommand{\CIR}{\raisebox{-1pt}{\Large \textopenbullet}~}
+% \newcommand{\SQR}{\raisebox{-1pt}{$\square$}~}        %amsmath package
+% \newcommand{\SQRF}{\raisebox{-1pt}{$\blacksquare$}~}  %amssymb package
+% \newcommand{\TRI}{\raisebox{-1pt}{\large $\rhd$}~} %amsmath package
+% \newcommand{\TRIF}{\raisebox{-1pt}{\large$\blacktriangleright$}~}  %amssymb package
+% \newcommand{\STRF}{\raisebox{-1pt}{$\bigstar$}~}  %amssymb package
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%      Course related Symbols & Characters:      %%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \def\MAT{~\raisebox{-3pt}{\includegraphics[scale=0.025]{./sx/img/Matlab-Logo}}~}
+% \def\SIM{~\colorbox[rgb]{0.75,0.75,0.75}{\large \reflectbox{\ding{50}}}~}
+% \def\PEN{~\colorbox[rgb]{0.75,0.75,0.75}{\uwave{\large \reflectbox{\ding{46}}}}~}
+% \def\HAND{~\colorbox[rgb]{0.75,0.75,0.75}{\uwave{\Large \ding{45}}}~}
+% \def\TYPE{~~\colorbox[rgb]{0.75,0.75,0.75}{\uwave{~~\Large \ding{45}}~~\textcolor[rgb]{1,1,1}{\texttt{(Type!)}}}~~}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This file is shared for fair use "without" any (implied/assumed) warranty %%
+%% of merchantability or applicability for a particular purpose.             %%
+%% (C)Behzad NOURI, bn@ieee.org                                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\endinput      % <-EoF: LaTeX will ignore anything after this line.
+                  

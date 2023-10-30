@@ -1,0 +1,75 @@
+@article{ref1,
+	author  = "A Author11 and B Author12",
+	title   = "Jnl paper title",
+	journal = "{IEEE} Trans. Microw. Theory Tech.",
+	year    = 2020,
+	month   = May,
+	volume  = "",
+	number  = "",
+	pages   = "1--10"}
+
+@inproceedings{ref2,
+	author    = "Author21, A and Author22, B",
+	title     = "Cnf paper title",
+	booktitle = "Proc.~xxth {IEEE} Conf. ", 
+	year      = 2020,
+	address   = "NY, NY, USA",
+	month     = jan,
+	volume    = "1",
+	number    = "2",
+	pages     = "11--22"}
+	
+@book{ref3,
+	author    = "Author31, A and Author32, B and Author33, C and Author34, D",
+	editor    = "", 
+	title     = "Book title",
+	volume    = "II",	
+	edition   = "Third",	
+	year      = "2022",
+	series    = "Mathematics",
+	publisher = "Father and Son Co.",
+	address   = "City, State, Country",
+	ISBN      = "3333"}	
+	
+@inbook{ref4,
+	author    = "Author41, A and Author42, B",
+	editor    = "Jean Editor41 and John Editor42", 
+	chapter   = "Chapter Title",
+	title     = "Book Title",
+	volume    = "IV",
+	edition   = "second",	
+	year      = "2022",
+	pages     = "100--120",
+    series    = "Physics",
+	publisher = "publisher",
+	address   = "City, State, Country",
+	ISBN      = "4444"}	
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%             IEEE Style                %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@comment{Note:
+General defaults:
+CTLuse_forced_etal        = "no",
+CTLmax_names_forced_etal  = "10",
+CTLnames_show_etal        = "1",
+
+IEEE recommendations:
+CTLuse_forced_etal          = "yes",
+CTLmax_names_forced_etal    = "6", <--et.al for 6/more authors
+CTLnames_show_etal          = "1", <--et.al after first author
+}
+@IEEEtranBSTCTL{IEEEexample:BSTcontrol,
+	ctluse_article_number    = {yes},
+	ctluse_paper             = {yes},
+	ctluse_forced_etal       = {yes},
+	ctlmax_names_forced_etal = {6},
+	ctlnames_show_etal       = {1},
+	ctluse_alt_spacing       = {yes},
+	ctlalt_stretch_factor    = {4},
+	ctldash_repeated_names   = {yes},
+	ctlname_format_string    = {{f.~}{vv~}{ll}{, jj}},
+	ctlname_url_prefix       = {[Online]. Available:},
+}
+%-----------------------------------------------------------------

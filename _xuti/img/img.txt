@@ -1,0 +1,4 @@
+This direcoty, "./img/", contains image files such as  *.jpg, jepg, png, eps, ps, and Pdf. 
+
+It contains the pdf files that are used only for their graphical contents (figures that 
+are saved in pdf format).

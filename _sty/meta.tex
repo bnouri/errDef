@@ -1,0 +1,30 @@
+%% Rev.: 22v1230-r0 
+%%/////////////////////////////////////////////////////////////////////////////
+%% Usage:
+%% This *.sty file adds Meta-Data to the PDF generated from LaTex.
+%%/////////////////////////////////////////////////////////////////////////////
+\newif\ifAddMetaData
+
+\AddMetaDatatrue
+%===============================
+%  *** Add PDF meta data: ***
+%===============================
+\ifAddMetaData
+    \makeatletter % changes the catcode of @ to 11
+    \hypersetup{  %Add document properties in PDF using LaTeX:
+        pdftitle= {PDF file}, %\@title,%
+        pdfauthor= {Behzad Nouri}, %\@author,%
+        pdfsubject={Technical},%
+        pdfkeywords={},%
+        pdfproducer={LaTeX},%
+        pdfcreator={pdfLaTeX}
+    }
+    \makeatother % changes the catcode of @ back to 12
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This file is shared for fair use "without" any (implied/assumed) warranty %%
+%% of merchantability or applicability for a particular purpose.             %%
+%% (C)2022, Behzad NOURI, bn@ieee.org                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

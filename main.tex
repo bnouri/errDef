@@ -1,0 +1,164 @@
+\RequirePackage[l2tabu, orthodox]{nag}
+\documentclass[10pt,oneside]{article}
+\usepackage{_sty/art,_sty/sh,_sty/dom,_sty/pdf,_sty/shx}
+%******************************
+%       *** Title ***
+%******************************
+\title{Error: Qualitative measure for accuracy}
+\author{bnouri}
+\date{\small \today}
+% \def\YY{2023} \def\MM{April} \def\DD{21}
+% \date{\small \MM~\DD,~\YY}
+
+%******************************
+%   *** Domestic-Tunings ***
+%******************************
+\setlength{\parindent}{0pt}
+%\setlength{\parskip}{0.5\baselineskip}
+%
+%******************************
+\input{_sty/meta}
+\begin{document}
+\bstctlcite{IEEEexample:BSTcontrol} %Keep it right here to add controls in the bib file into effect.
+\input{_sty/fm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% *** The Body of Document ***
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Time domain signals} 
+The difference between outputs should be measured at the same $n$ time instances and for the same input signal $u(t)$. 
+Let $x(t)$ and $y(t)$ be the two time signals sampled at the same $N$ discrete time instances in the interval $T$, $t_i \in  \mathbf{T}$, given as two (real-valued) time series, i.e.,
+\begin{align}\label{eq:sig-1}
+\mat{x}(\cdot)&=\left\{x(t_n) \in \mathbb{R} \:\mid \: \forall\;\;1 \leq n \leq N \right\}, \;\;\text{and} \\
+\mat{y}(\cdot)&=\left\{y(t_n) \in \mathbb{R} \:\mid \: \forall\;\;1 \leq n \leq N \right\}
+\end{align}
+
+\subsection{Absolute Error}
+\emph{Absolute Error (AE)} is defined as the absolute-vale of the instantaneous difference between two time signals measured at the same time instances (and logically for the same excitation). 
+\begin{equation}\label{eq:ae-1}
+\zeta(t_n)= |x(t_n) - y(t_n)|, \qquad 1 \leq n \leq N 
+\end{equation}
+The absolute-error for two signals is a time series as 
+
+\begin{equation}\label{eq:ae-2}
+\zeta(\cdot)=\left\{e(t_n) \in \mathbb{R}^+ \:\mid \: \forall\;\;1 \leq n \leq N \right\}
+\end{equation}
+
+\noindent Absolute Error may be seen as a more natural way of quantifying the instantaneous error.
+
+\subsubsection*{Implementation considerations:}
+If $x(t)$ and $y(t)$ are not given at the same time points in the same time span, i.e.,
+\begin{align}\label{eq:sig-2}
+\mat{x}(.)&=\left\{x(t_{n_i})\:\mid \: \forall\;\;1 \leq n_i \leq N_i ,\;\; t_{n_i}\in\mathbf{T}_i 
+\right\}\\
+\mat{y}(.)&=\left\{y(t_{n_j})\:\mid \: \forall\;\;1 \leq n_j \leq N_j ,\;\; t_{n_j}\in\mathbf{T}_j
+\right\}
+\end{align}
+Given that measurement of the signals are not available at the same time points ($t_{n_i}\:\neq\:t_{n_j},\;\;\text{for}\quad n_i\:=\:n_j$), number of time points are different ($N_i\:\neq\:N_j$), and (/or) the evaluations are not in the same time span ($\mathbf{T}_i\neq\mathbf{T}_j$). The absolute error can be evaluated through the following steps
+\begin{enumerate}
+    \item Take the overlapping part of the time spans, $\mathbf{T} = \mathbf{T}_i\:\bigcap\:\mathbf{T}_j$
+    \item Select the signal with the larger number of samples in $\mathbf{T}$.\\ Let it be $\mat{x}(.)$ having $N$ samples at $t_{n}\:\in\:\mat{T}$ $\forall\;\leq n \leq N$
+    \item Interpolate the other signal($y(t)$) at $t_{n}\:\in\:\mat{T}$ $\forall\;\leq n \leq N$ to obtain $\mat{y}(.)$ with entries coincide with the ones in $\mat{x}(.)$
+    \item Use \eqref{eq:ae-2} to evaluate the absolute error. 
+\end{enumerate}
+It is to be noted that 
+\begin{itemize} \packed
+    \item The evaluated error is computed only in the overlaping time span as $T\subseteqq\;\;\mat{T}_i,\:\mat{T}_j$.
+    \item Approximating signal(s) using interpolation will lead to an estimation of absolute errors 
+    \item On the other hand the erroneous results from extrapolation can provide a misleading measure for accuracy.
+\end{itemize}
+
+
+\np
+Table~\ref{tab:definitions-of-error} presents a summary of the commonly used measures to quantify the errors.
+
+\begin{singlespace}
+\begin{table}[!ht]
+\renewcommand{\arraystretch}{1.2}
+\caption{Measuring reduction accuracy in time domain} %title of the table
+\centering
+\begin{tabular}{ll}
+%%**************************************************************
+\hline
+\textbf{Error}   &   \textbf{Definition}\\ 
+\hline \\
+%----------------------------------------------------------------
+\emph{Absolute error:}&  
+$\boldsymbol \zeta(t_n)= \big|x(t_n) - y(t_n)\big|$,~~~~~~
+$\boldsymbol \zeta(\cdot)=\left\{e(t_n)|\;\forall t_n\in\mat{T}\right\}$\\[12pt] 
+%---------------------------------------------------------------- 
+\emph{Average (mean) absolute error:}&  
+$\dfrac{\big\|\boldsymbol \zeta(\cdot)\big\|_1}{N}\:=\:
+\dfrac{1}{N}\sum\limits_{n=1}^N\boldsymbol \zeta(t_n)$,~~{\small where $\|\cdot\|_1$ denotes $\mathcal{L}_1$ norm} 
+\\ [12pt]
+%----------------------------------------------------------------
+\emph{Relative error:} & $\dfrac{\boldsymbol \zeta(\cdot)}{\big|x(t_n) \big|}$ \\ [12pt]
+%----------------------------------------------------------------
+\emph{mean squared error:}  &   $\dfrac{\big\|{\boldsymbol \zeta}\|_e^2}{\displaystyle n}$,~~ {\small where $\|{\boldsymbol \cdot}\|_e$ is Euclidean norm} \\ [12pt]
+%
+\emph{normalized mean squared error:}  & $\frac{\displaystyle \|{\boldsymbol \zeta}\|_e^2}{\displaystyle \mathrm{var}(y)}$, ~~ {\small where ``\textbf{var}'' denotes the \emph{variance}$\,^\ast$ of data set}\\ [12pt]
+%
+\emph{root mean squared error:}   &   $\frac{\displaystyle \|{\boldsymbol \zeta}\|_e}{\displaystyle \sqrt{n}}$\\ [12pt]
+%
+\emph{normalized root mean squared error:}  & $\frac{\displaystyle \|{\boldsymbol \zeta}\|_e}{\displaystyle \sqrt{\mathrm{var}(y)}}$\\ [12pt]
+%
+\emph{mean absolute error:}   &   $\frac{\displaystyle \left\|{\boldsymbol \zeta}\right\|_1}{\displaystyle n}$ \\ [12pt]
+%
+\emph{mean absolute relative error:}&  $\frac{  \displaystyle \left\|\frac{\displaystyle {\boldsymbol \zeta}}{y}\right\|_1 }{\displaystyle n}$ \\ [12pt]
+%
+\hline\\[12pt]
+%
+%
+\multicolumn{2}{l}{*-~~For a data set $y=\set{y_i}$ including $N$ data points,  variance is computed as}\\ 
+\multicolumn{2}{l}{~~~~~$\displaystyle \mathrm{var}(y)\,\triangleq \,\frac{\displaystyle 1}{N}\,\sum\limits^{N}_{i=1}{\brk{y_i\,-\,\overline{y}}^2}$, where $\overline{y}$ is the data mean $\displaystyle \overline{y}\,\triangleq\,\frac{1}{N}\,\sum\limits^{N}_{i=1}{y_i}$.}\\
+%%**************************************************************
+\end{tabular}
+\label{tab:definitions-of-error}
+\end{table}
+\end{singlespace}
+
+\par \pagebreak
+
+\section{Frequency domain signals}
+The difference between outputs should be measured at the same $n$ time instances and for the same input signal $u(t)$. ONLY for the case of linear systems such deviation can also be judged comparing the frequency response of the original system and the one from the reduced transfer function at the $n$ frequency points throughout the frequency spectrum of interest.
+The results for ``single-input and single-output'' (SISO) systems will be a vector and  for ``multi-input and multi-output'' (MIMO) cases it is a matrix containing the instantaneous errors at different ``ports''.
+
+The error space (the space, where error resides) is considered as metric space (definition~\ref{def:metric-space}) endowed with different norms that can be properly used to characterize the error (Sec.~\ref{sec:different-norms}). Table~\ref{tab:definitions-of-error} presents a summary of the commonly used measures to quantify the error in the context of (linear / nonlinear) MOR.
+
+
+
+Notes: Matlab-like pseudo definition
+\begin{lstlisting}
+%Absolute Error
+e= abs(abs(Y1)-abs(Y2));
+
+%Relative Error
+nzidx = find(abs(Y1)>1e-10);
+re = e(nzidx)./abs(Y1(nzidx)); 
+
+%Root mean squarred (RMS) error
+RMSe = sqrt(mean(e.^2));  %Root Mean Square Error   
+
+
+% Relative root mean squarred (RMS) error
+%or: RMSe12 = norm(e)/sqrt(numel(e));
+RMSre = sqrt(mean(re.^2)); 
+    
+\end{lstlisting}
+
+%******************************
+%      *** Appendix ***
+%******************************
+%\appendix
+%\section{title}\label{sec:100}
+%\section{title}\label{sec:101}
+%******************************
+%     *** References ***
+%******************************
+%\bibliography{bib/Ref}
+%
+%%\input{_xuti/Sample.tex}
+\end{document}
+
+
+
+

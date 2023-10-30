@@ -1,0 +1,5 @@
+This direcoty, "./pdf/", contains Pdf files that are page(s) of pdf documents. 
+
+But pdf files that are used only for their graphical contents (figures that 
+are saved in pdf format) are copied to "./img/".
+

@@ -1,0 +1,73 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This file is shared for fair use "without" any (implied/assumed) warranty %%
+%% of merchantability or applicability for a particular purpose.             %%
+%% (C)2022, Behzad NOURI, bn@ieee.org                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\fileversion{1230}
+\def\filedate{2022/12/30}
+
+\def\styfile{_sty/dom}
+
+\def\fileInfo{(Sty file incl: Shortcuts \& Shorthand writings)}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{\styfile}[\filedate\space\fileversion] 
+\typeout{-- Package: "\styfile",\space\fileInfo\space\fileversion\space <\filedate> --}
+%%/////////////////////////////////////////////////////////////////////////////
+%% This file contains all the project-specific settings (aka domestic tunings.)
+%%/////////////////////////////////////////////////////////////////////////////
+\newif\ifCondenced   
+
+
+\Condencedtrue
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%  Margins Condensation  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifCondenced
+    \usepackage{titlesec}
+    \titlespacing*{\section}      {0pt}{2ex plus 0ex minus 0ex}{0ex plus 0ex}
+    \titlespacing*{\subsection}   {0pt}{2ex plus 0ex minus 0ex}{0ex plus 0ex minus 0ex}
+    \titlespacing*{\subsubsection}{0pt}{2ex plus 0ex minus 0ex}{0ex plus 0ex minus 0ex}
+    \titlespacing*{\paragraph}    {0pt}{2ex plus 0ex minus 0ex}{0ex plus 0ex minus 0ex}
+    \titlespacing*{\subparagraph} {0pt}{2ex plus 0ex minus 0ex}{0ex plus 0ex minus 0ex}
+    
+    \titleformat*{\section}      {\large\bfseries}
+    \titleformat*{\subsection}   {\normalsize\bfseries}
+    \titleformat*{\subsubsection}{\normalsize\bfseries}
+    \titleformat*{\paragraph}    {\normalsize\bfseries}
+    \titleformat*{\subparagraph} {\normalsize\bfseries}
+\fi
+
+%==============================
+%   *** Domestic-Tunings ***
+%==============================
+\graphicspath{{./img/}{./fig/}{./pdf}}
+\renewcommand{\arraystretch}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%    For Two Columns     %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% When:  
+%% \documentclass[letterpaper,10pt,oneside, two column]{article}
+
+\newif\ifTwoCol
+\TwoColtrue
+\ifTwoCol
+    \setlength{\columnsep}{0.5cm}
+    \setlength{\columnseprule}{0.5pt}
+\fi
+
+%******************************
+%   *** Domestic-Tunings ***
+%******************************
+%
+%
+%******************************
+
+%%%%%%%%%%%%%%%%%%%%
+\endinput      %%%%% <-EoF: LaTeX will ignore anything after this line.
+%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+

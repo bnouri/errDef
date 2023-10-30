@@ -1,0 +1,155 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This file is shared for fair use "without" any (implied/assumed) warranty %%
+%% of merchantability or applicability for a particular purpose.             %%
+%% (C)2022, Behzad NOURI, bn@ieee.org                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Rev.: 22v1123-r0 
+
+\newif\ifStdTitle      %To select between SBN / Standard Title-page
+\newif\ifHdrTitle
+\newif\ifBoxTitle
+\newif\ifLeftBlank    %To add the message `` Intentionally left blank!''
+\newif\ifCopyRightOnCover
+\newif\ifCopyRightInFooter
+\newif\ifTOC
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%   Adjust Me First!    %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\HdrTitletrue
+\StdTitletrue         %true= prints LaTeX's standard using \maketitle
+\BoxTitlefalse
+
+\LeftBlankfalse
+\TOCfalse
+\CopyRightOnCoverfalse    %%true: puts "Copy Right note" as footer on the first page
+\CopyRightInFooterfalse    %%true: puts "Copy Right note" as footer on all other pages
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%   Checks & Controls    %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifHdrTitle
+    \StdTitlefalse 
+    \BoxTitlefalse
+    \LeftBlankfalse
+\else
+    \ifStdTitle
+        \BoxTitlefalse
+    \fi
+\fi
+
+\ifCopyRightInFooter
+    \CopyRightOnCoverfalse
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%     Front Matters      %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter % changes the catcode of @ to 11
+\let\TITLE\@title
+\let\AUTHOR\@author
+\let\DATE\@date
+\makeatother % changes the catcode of @ back to 12
+\def\ShortTitle{\TITLE}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%   Make-Title-in-Header  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifHdrTitle
+    \def\HDRA{\TITLE}      \def\HDRC{}     
+    \def\HDRB{\AUTHOR}     \def\HDRD{\DATE}
+    \fancypagestyle{firstpage}{%
+        \fancyhead[L]{\textbf{\HDRA}\\{}\HDRB}    
+        \fancyhead[R]{\HDRC\\{}{\footnotesize \HDRD} 
+        \renewcommand{\headrulewidth}{0.25pt}} %top header-line only for the first page
+    }
+    \thispagestyle{firstpage}
+    \setlength{\droptitle}{-4em}
+    %\vspace*{-1.75\baselineskip}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Make-LaTeX's-STD- Title  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifStdTitle
+    \maketitle
+    \vspace*{\baselineskip}
+    \thispagestyle{empty}
+    \setcounter{page}{0}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%  Make-Title-in-Gray-Box  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifBoxTitle
+    \setlength{\droptitle}{0.5\baselineskip}
+    \vspace*{3\baselineskip} 
+    \begin{singlespace} 
+        \begin{tcolorbox}[colback=mygray, width=(\textwidth-3\parindent), arc=2mm,boxrule=0.75pt, center]  %colback=white
+            \maketitle
+            \mbox{}\par
+        \end{tcolorbox}
+    \end{singlespace}%
+    \thispagestyle{empty}
+    \setcounter{page}{0}    
+\fi    %-\ifStdTitle 
+    
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%    Left-Blank     %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifLeftBlank
+    \vspace*{12\baselineskip}
+    \begin{center}
+        \textcolor[rgb]{0.4,0.4,0.4}{\emph{\large Intentionally left blank.}}
+    \end{center}
+\fi
+
+\ifHdrTitle
+    %\thispagestyle{empty} %% No header and footer for page-2,3,..
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%   Copyright Note   %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\usePrsn{This Document is Personal and Private!}
+
+\def\useFair{\mycopyright Fair use of the content is permitted with mentioning to this reference.}
+
+\def\useCdns{%
+	\raisebox{-4pt}{\includegraphics[keepaspectratio=true,width=0.125\textwidth]{_xty/cdns.png}}~~%
+    {{\footnotesize Internal and confidential document, not intended for distribution.}}
+    %% {{\footnotesize Internal and confidential, not for distribution.}}
+}%\useCdns
+
+\def\copyRightNote{\useFair}%\personalUse}
+
+\ifCopyRightOnCover
+    \ifHdrTitle\else \mbox{}\par\vfill \fi
+    \blfootnote{\copyRightNote}%\blfootnote
+\fi
+
+\ifCopyRightInFooter
+    \lfoot{\rule{0.4\textwidth}{0.25pt}\nl\copyRightNote}
+\fi
+
+\ifLeftBlank
+    \np
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%        TOC        %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifTOC
+    \begin{center}
+        \begin{minipage}{.8\textwidth}
+        {\small \singlespacing\tableofcontents}
+        \end{minipage}
+    \end{center}
+    \np
+\fi %-\ifTOC
+
+%%%%%%%%%%%%%%%%%%%%
+\endinput      %%%%% <-EoF: LaTeX will ignore anything after this line.
+%%%%%%%%%%%%%%%%%%%%
